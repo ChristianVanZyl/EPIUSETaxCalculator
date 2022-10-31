@@ -1,0 +1,217 @@
+body{
+    min-height: 200vh; 
+    width: 100%;
+    
+}
+
+.container-fluid {
+    padding-right:0;
+    padding-left:0;
+    margin-right:auto;
+    margin-left:auto;
+  
+ }
+
+.full-row{
+    width: 100%;
+    height: 200vh;
+    margin: 0;
+    padding: 0;
+}
+
+.full-col{
+    width: 50%;
+    height: 200vh;
+    margin: 0;
+    padding: 0;
+}
+
+.mainDiv{
+    padding-top: 100px;
+    padding-bottom: 100px;
+   
+}
+
+.footer{
+    padding-top: 50px;
+    text-align: center;
+}
+
+
+
+.leftImageDiv{
+    text-align: end;
+}
+
+
+
+.rightImageDiv{
+    text-align: start;
+    padding-top: 1%;
+
+}
+
+.form-control{
+    width: 70%;
+    font-family: 'Roboto', sans-serif;
+    color: #587d9f;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.centerForm{
+    margin-left: 60%;
+}
+
+.form-label{
+    font-size: 18px;
+    color: #587d9f;
+    font-family: 'Roboto', sans-serif;
+}
+
+.submitButton{
+    background-color: #30373f;
+    width: 70%;
+    font-size: 22px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
+    border: 1px;
+    border-style: solid;
+    border-color: #30373f;
+    font-family: 'Roboto', sans-serif;
+}
+
+.submitButton:hover{
+    color: white;
+    background-color: #587d9f;
+    border-color: #587d9f;
+}
+
+.submitButton:focus {
+    color: white !important;
+    background-color:  #587d9f !important;
+    border-color: #587d9f !important;
+    box-shadow: none !important;
+  }
+
+
+.viewButton{
+    background-color: white;
+    width: 70%;
+    font-size: 22px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #30373f;
+    border: 1px;
+    border-style: solid;
+    border-color: white;
+    font-family: 'Roboto', sans-serif;
+}
+
+.viewButton:hover{
+    color: white;
+    background-color: #30373f;
+    border-color: #30373f;
+}
+
+.viewButton:focus {
+    color: white !important;
+    background-color:  #30373f !important;
+    border-color: #30373f !important;
+    box-shadow: none !important;
+  }
+
+.viewButton:disabled {
+    border-color: white;
+    background-color: white;
+    color: #30373f;
+}
+
+
+.closeButton{
+    background-color: #30373f;
+    width: 50%;
+    font-size: 22px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
+    border: 1px;
+    border-style: solid;
+    border-color: #30373f;
+    font-family: 'Roboto', sans-serif;
+}
+
+.closeButton:hover{
+    color: white;
+    background-color: #587d9f;
+    border-color: #587d9f;
+}
+
+.closeButton:focus {
+    color: white !important;
+    background-color:  #30373f !important;
+    border-color: #30373f !important;
+    box-shadow: none !important;
+  }
+
+
+  .tableDiv{
+    margin-top: 9.5%;
+    margin-left:10%;
+    width: 45%
+  }
+
+  .resultHeading{
+    font-size: 22px;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    padding-bottom: 2%;
+  }
+
+  th{
+    font-weight: normal !important;
+  }
+
+  tr{
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    text-align: center;
+   
+  }
+
+  td{
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    text-align: left;
+ 
+  }
+
+  .calculatingHeader{
+    font-family: 'Roboto', sans-serif;
+    font-size: 22px;
+    color: white ;
+    text-align: center;
+  }
+
+  .modal-header{
+    justify-content: center !important;
+    
+  }
+
+
+  .modal-footer{
+    justify-content: center !important;
+  }
+
+

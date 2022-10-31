@@ -1,0 +1,19 @@
+{
+    "name": "epiuse_taxcalculator",
+    "version": "1.0.0",
+    "description": "",
+    "type": "module",
+    "main": "app.js",
+    "scripts": {
+        "start": "nodemon app.js"
+    },
+    "author": "Christian van Zyl",
+    "license": "EpiUse",
+    "dependencies": {
+        "dotenv": "^16.0.3",
+        "ejs": "^3.1.8",
+        "express": "^4.18.2",
+        "express-async-handler": "^1.2.0",
+        "nodemon": "^2.0.20"
+    }
+}
