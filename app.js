@@ -3,9 +3,11 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import calcNet from "./functions.js";
 
+
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
+
 
 // to use ejs views
 
@@ -38,6 +40,9 @@ app.get("/", function(req, res){
 
 app.post('/', async (req, res) => {
     const {ageInput, incomeInput} = req.body;
+  
+
+
     try {
         const resultObj =  await calcNet(ageInput,incomeInput);
         res.render("Home", {
@@ -63,4 +68,9 @@ app.post('/', async (req, res) => {
 
 app.listen(PORT, function(){
     console.log(`Server running on port ${PORT}`)
+  
+  
 })
+
+
+

@@ -1,0 +1,18 @@
+   {
+    "TaxThreshold": [{
+            "id": 1,
+            "Max": 65,
+            "Amount": 91250.00
+        },
+        {
+            "id": 2,
+            "Max": 75,
+            "Amount": 141250.00
+        },
+        {
+            "id": 3,
+            "Max": null,
+            "Amount": 157900.00
+
+        }]
+        }

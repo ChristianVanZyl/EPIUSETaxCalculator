@@ -56,18 +56,8 @@ export default async function calcNet(ageInput,incomeInput) {
 }
 
 
-// used to read and parse json file data
-// the value param refers to the json filename
 
-async function read(value){
- try {
-        const readObject = await fsPromises.readFile(value, 'utf8');
-        let returnObj = JSON.parse(readObject);
-        return returnObj
-    } catch (err) {
-        return console.log(err.message);
-    }
-}
+
 
 // fetch necessary json data and add minAge, as well as max age = infinity to the object array
 
@@ -90,7 +80,7 @@ async function fetchAndAddAge(jsonFileName){
                 minAgeArr.push({ "id": count+2, "MinAge": threshold[count].MaxAge});
         }
     }
-     
+    
 
     // merge threshold and minAge arrays, recreating threshold array with added minAge
     let mergeArray = [];
