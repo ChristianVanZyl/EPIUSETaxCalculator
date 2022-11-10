@@ -47,21 +47,38 @@
 </div> 
 <!-- end col 1 --> 
 
+<!-- start col 2 --> 
+<div class="col-sm-12 full-col" style="background-color:#587d9f"> 
+  <div class="rightImageDiv">
+  <img src="/images/ZONE.png" class="img-fluid" alt="Responsive image">
+ </div>
+ <div class="<%= tableDisplay === 'true' ? 'tableDiv' : 'tableNonDisplay' %>" >
+ 
+    <h1 class="resultHeading" >Calculated Tax Results</h1>
 
+    <table class="table table-bordered" style="background-color: #30373f; border-color: white; ">
+      <tbody>
 
+        <% outputs = outputs.forEach((value, key) => { %>
+     
+          <tr style="background-color: #587d9f; color: white">
+          <th colspan="2"> <%= key %></td>
+          </tr>
+          <tr>
+            <td>R<%= (value.value).toFixed(2) %></td>
+          </tr>
 
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
 
-
-
-
-
-
-
-
-
-
-
-
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- end col 2 --> 
 
 </div>
 <!-- end row -->   
