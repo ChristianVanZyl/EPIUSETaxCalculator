@@ -5,22 +5,19 @@ import {BaseStep} from "./baseStep.js"
     // new AnnualizationStep("retirement_contribution", "periods_per_year")
 export class AnnualizationStep extends BaseStep{
   
-    constructor(income, paymentPeriods, annualized){
-            super()
-            this.income = income
-            this.paymentPeriods = paymentPeriods
-            this.annualized = annualized
+    constructor(nameOf, description, type, firstValue, secondValue){
+            super(nameOf, description, type)
+            this.firstValue = firstValue
+            this.secondValue = secondValue
     }
     
     execute(payRollData){
-        const income = Number(payRollData.get(this.income))
-        const paymentPeriods = Number((payRollData.get(this.paymentPeriods)))
+        const firstValue = payRollData.get(this.firstValue).value
+        const secondValue = payRollData.get(this.secondValue).value
+      
+        let val = firstValue * secondValue
 
-        const annualized = income * paymentPeriods
-
-        payRollData.set(this.annualized, annualized)
-
-        return payRollData
+        return this.addTo(payRollData, val)
     }
-
 }
+

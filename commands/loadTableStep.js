@@ -1,21 +1,20 @@
 import {BaseStep} from "./baseStep.js"
-import fs from "fs";
+import jsonLoader from "../jsonLoader.js";
 
 // new LoadTableStep("income_table", "tax_income_table") // map.set("income_table"," taxIncomeTable.json") 
 export class LoadTableStep extends BaseStep{
-    constructor(tableInputFileName, tableOutputName){
-            super()
-            this.tableOutputName = tableOutputName
+    constructor(nameOf, description, tableInputFileName){
+            super(nameOf, description)
             this.tableInputFileName = tableInputFileName;
     }
 
     execute(payRollData){
-        const tableInputFileName = payRollData.get(this.tableInputFileName)
-        let tableSet = JSON.parse(fs.readFileSync(tableInputFileName))
         
-        payRollData.set(this.tableOutputName, tableSet)
+        
+        let tableset = jsonLoader(this.tableInputFileName)
+        
+        payRollData.set(this.nameOf, tableset)
         return payRollData;
     }
 
 }
-

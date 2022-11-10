@@ -1,7 +1,6 @@
 import express from "express";
-import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import calcNet from "./functions.js";
+import processPayRollData from "./processComposite.js"
 
 
 dotenv.config();
@@ -14,56 +13,27 @@ const PORT = process.env.PORT;
 app.set("view engine", "ejs");
 
 // middleware for static files
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 app.use(express.static("public"));
 
 app.get("/", function(req, res){
-    res.render("Home", {
-        buttonStatus: "disabled",
-        ageSaved: "",
-        incomeSaved: "",
-        taxThreshold: "",
-        taxRebate: "",
-        yearlyBeforeRebate: "",
-        taxTotal: "",
-        paye: "",
-        uifMax: "",
-        uifPerc: "",
-        uifMonthly: "",
-        netMonthly: "",
-        netYearly: "",
-    }) 
+    let map = new Map();
+    let ioArray = processPayRollData(map)
+
+    res.render("Home", {inputs: ioArray[0],
+                        outputs: ioArray[1]}) 
 });
 
-// user posts age and income and the post request returns an object with all frontend tax related results, including paye
-
-app.post('/', async (req, res) => {
-    const {ageInput, incomeInput} = req.body;
-  
 
 
-    try {
-        const resultObj =  await calcNet(ageInput,incomeInput);
-        res.render("Home", {
-            buttonStatus: "enabled",
-            ageSaved: ageInput,
-            incomeSaved: incomeInput,
-            taxThreshold: resultObj.taxThreshold,
-            taxRebate: resultObj.taxRebate,
-            yearlyBeforeRebate: resultObj.yearlyBeforeRebate,
-            taxTotal: resultObj.taxTotal,
-            paye: resultObj.paye,
-            uifMax: resultObj.uifMax,
-            uifPerc: resultObj.uifPerc,
-            uifMonthly: resultObj.uifMonthly,
-            netMonthly: resultObj.netMonthly,
-            netYearly: resultObj.netYearly  
-        })  
-    } catch (err) {
-        return console.log(err.message);
-    }
+app.post('/', (req, res) => {
+    const inputs = (req.body)
+    const map = new Map(Object.entries(inputs));
+    let ioArray = processPayRollData(map)
    
+    res.render("Home", {inputs: ioArray[0],
+                        outputs: ioArray[1]}) 
 });
 
 app.listen(PORT, function(){

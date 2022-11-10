@@ -2,19 +2,20 @@ import {BaseStep} from "./baseStep.js"
  // new LookupTableStep("age", "tax_threshold_data", "tax_threshold_total") 
 export class LookupTableStep extends BaseStep{
 
-    constructor(lookupValue, tableData, outputName){
-        super()
+    constructor(nameOf, description, type, lookupValue, tableName){
+        super(nameOf, description, type)
         this.lookupValue = lookupValue
-        this.tableData = tableData
-        this.outputName = outputName
+        this.tableName = tableName
     }
 
     execute(payRollData){
-        const lookupValue = Number(payRollData.get(this.lookupValue))
-        const tableData = payRollData.get(this.tableData)
+        const lookupValue = payRollData.get(this.lookupValue).value
+
+
+        const tableName = payRollData.get(this.tableName)
         
-        let tableKey =  (Object.keys(tableData)).toString()
-        let objectArrayofData = tableData[tableKey];
+        let tableKey =  (Object.keys(tableName)).toString()
+        let objectArrayofData = tableName[tableKey];
         
        
         // create a temp array and min values array 
@@ -22,7 +23,7 @@ export class LookupTableStep extends BaseStep{
         // merge min value array with chosen array, store in temp array
         // use temp array for calculations
         let tempArray = [];
-        let result;
+        let val;
         let count = 0
         let minArray = [{
             "id": 1,
@@ -58,7 +59,8 @@ export class LookupTableStep extends BaseStep{
         if(tableKey == "TaxThreshold"){
         
         let newArray = tempArray.filter(m => lookupValue < m.Max && lookupValue >= m.Min ? m.Amount : null)  
-        result = newArray[0].Amount
+        
+        val = newArray[0].Amount
         }
     
       
@@ -71,7 +73,7 @@ export class LookupTableStep extends BaseStep{
             tempArr2.push({ ...tempArray[count], "Rebate": rebate}); 
         }
         let newArray = tempArr2.filter(m => lookupValue < m.Max && lookupValue >= m.Min ? m.Rebate : null)  
-        result = newArray[0].Rebate  
+        val = newArray[0].Rebate  
         
         }
 
@@ -119,13 +121,13 @@ export class LookupTableStep extends BaseStep{
             }
         }
 
-        result = tempResult
+        val = tempResult
         
         }
 
 
-        payRollData.set(this.outputName, result)
+      
 
-        return payRollData
+        return this.addTo(payRollData, val)
 }
 }

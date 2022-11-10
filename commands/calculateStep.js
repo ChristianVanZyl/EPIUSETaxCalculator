@@ -1,32 +1,34 @@
 import {BaseStep} from "./baseStep.js"
 // new CalculateStep("annualized", "/", "income", "calculated_periods")
 export class CalculateStep extends BaseStep{
-    constructor(firstValue, operator, secondValue, outputResultName){
-            super()
+    constructor(nameOf, description, type, firstValue, operator, secondValue, value){
+            super(nameOf, description, type)
             this.firstValue = firstValue,
             this.operator = operator,
-            this.secondValue = secondValue,
-            this.outputResultName = outputResultName
+            this.secondValue = secondValue
+            this.value = value
     }
 
     execute(payRollData){
-            const firstValue = Number(payRollData.get(this.firstValue))
-            const secondValue = Number(payRollData.get(this.secondValue))
-            let outputResult
+            const firstValue = payRollData.get(this.firstValue).value
+            const secondValue = payRollData.get(this.secondValue).value
+            
+          
 
+            let val
             if(this.operator == "+"){
-                outputResult = firstValue + secondValue
-            }else if(this.operator == "-"){
-                outputResult = firstValue - secondValue
+                val = firstValue + secondValue
+            }else if(this.operator== "-"){
+                val = firstValue - secondValue
             }else if(this.operator == "/"){
-                outputResult = firstValue / secondValue
+                val = firstValue / secondValue
             }else if(this.operator == "*"){
-                outputResult = firstValue * secondValue
+                val = firstValue * secondValue
             }
-
-            payRollData.set(this.outputResultName, outputResult)
-        
-            return payRollData
+          
+         
+           
+            return this.addTo(payRollData, val)
 
     }
 }
