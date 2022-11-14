@@ -11,9 +11,30 @@ export class Steps extends BaseStep{
     execute(payRollData){
      
         this.commandSteps.forEach(commandStep => {      
-             commandStep.execute(payRollData)       
+             commandStep.execute(payRollData)          
         })
         return payRollData
     }
 
+    hasType(inputvalue){
+        let map = this.commandSteps
+        let returnvalue = map.filter((value) => 
+            {
+                value instanceof inputvalue 
+                return value instanceof inputvalue 
+            }
+        )   
+        return returnvalue
+    }
+
+    setValues(vals){ 
+        let map = this.commandSteps
+
+        Object.entries(vals).forEach(([key, val]) => {
+        map.some(m => m.nameOf === key ? m.value = val: console.log(""))
+        });
+        return map
+    }
+
 }
+

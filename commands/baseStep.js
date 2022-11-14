@@ -1,26 +1,34 @@
 
 
 export class BaseStep{
-    constructor(nameOf, description, type){
+    constructor(nameOf, description){
         this.nameOf = nameOf;
         this.description = description
-        this.type = type
     }
 
     execute(payRollData){
         throw Error("Must be implemented")
     }
 
+    hasType(inputvalue){
+        throw Error("Must be implemented")
+    }
+    
+
     addTo(payRollData, value){
         
         const name = this.nameOf
         const desc = this.description
-        const typ = this.type
+   
         
-        payRollData.set(name, {description: desc, type: typ, value: value})
+        payRollData.set(name, {description: desc, value: value})
         
         return payRollData
     }
 
-  
+   
+
+
+
+
 }

@@ -1,19 +1,18 @@
 import {BaseStep} from "./baseStep.js"
-import jsonLoader from "../jsonLoader.js";
+import dataLoader from "../dataLoader.js";
 
-// new LoadTableStep("income_table", "tax_income_table") // map.set("income_table"," taxIncomeTable.json") 
+
+// this needs to make use of init for async loading of dataloader
+
 export class LoadTableStep extends BaseStep{
     constructor(nameOf, description, tableInputFileName){
             super(nameOf, description)
-            this.tableInputFileName = tableInputFileName;
+            this.tableset = dataLoader(tableInputFileName);
     }
 
     execute(payRollData){
-        
-        
-        let tableset = jsonLoader(this.tableInputFileName)
-        
-        payRollData.set(this.nameOf, tableset)
+    
+        payRollData.set(this.nameOf, this.tableset)
         return payRollData;
     }
 

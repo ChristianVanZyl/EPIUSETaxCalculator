@@ -2,14 +2,15 @@ import {BaseStep} from "./baseStep.js"
 
 
 export class OutputStep extends BaseStep{
-    constructor(nameOf, description, type, output){
-            super(nameOf, description, type) 
+    constructor(nameOf, description, output){
+            super(nameOf, description) 
             this.output = output
     }
 
     execute(payRollData){
        
         const output = payRollData.get(this.output).value
+      
         let val = output
 
         return this.addTo(payRollData, val)

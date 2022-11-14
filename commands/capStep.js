@@ -1,11 +1,11 @@
 import {BaseStep} from "./baseStep.js"
 // new CapStep("uif_max", "uif_monthly_not_capped") 
 export class CapStep extends BaseStep{
-    constructor(nameOf, description, type, firstValue, secondValue){
+    constructor(nameOf, description, firstValue, secondValue){
         super(nameOf, description)
             this.firstValue = firstValue
             this.secondValue = secondValue
-            this.type = type
+
     }
     
     execute(payRollData){

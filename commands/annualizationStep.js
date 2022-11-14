@@ -5,8 +5,8 @@ import {BaseStep} from "./baseStep.js"
     // new AnnualizationStep("retirement_contribution", "periods_per_year")
 export class AnnualizationStep extends BaseStep{
   
-    constructor(nameOf, description, type, firstValue, secondValue){
-            super(nameOf, description, type)
+    constructor(nameOf, description, firstValue, secondValue){
+            super(nameOf, description)
             this.firstValue = firstValue
             this.secondValue = secondValue
     }
@@ -16,6 +16,7 @@ export class AnnualizationStep extends BaseStep{
         const secondValue = payRollData.get(this.secondValue).value
       
         let val = firstValue * secondValue
+        
 
         return this.addTo(payRollData, val)
     }

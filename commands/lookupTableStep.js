@@ -2,8 +2,8 @@ import {BaseStep} from "./baseStep.js"
  // new LookupTableStep("age", "tax_threshold_data", "tax_threshold_total") 
 export class LookupTableStep extends BaseStep{
 
-    constructor(nameOf, description, type, lookupValue, tableName){
-        super(nameOf, description, type)
+    constructor(nameOf, description, lookupValue, tableName){
+        super(nameOf, description)
         this.lookupValue = lookupValue
         this.tableName = tableName
     }
@@ -13,7 +13,7 @@ export class LookupTableStep extends BaseStep{
 
 
         const tableName = payRollData.get(this.tableName)
-        
+       
         let tableKey =  (Object.keys(tableName)).toString()
         let objectArrayofData = tableName[tableKey];
         
@@ -59,8 +59,14 @@ export class LookupTableStep extends BaseStep{
         if(tableKey == "TaxThreshold"){
         
         let newArray = tempArray.filter(m => lookupValue < m.Max && lookupValue >= m.Min ? m.Amount : null)  
+        if(newArray.length > 0){
+            val = newArray[0].Amount
+           
+        }else{
+          
+            val = 0;
+        }
         
-        val = newArray[0].Amount
         }
     
       
@@ -73,7 +79,13 @@ export class LookupTableStep extends BaseStep{
             tempArr2.push({ ...tempArray[count], "Rebate": rebate}); 
         }
         let newArray = tempArr2.filter(m => lookupValue < m.Max && lookupValue >= m.Min ? m.Rebate : null)  
-        val = newArray[0].Rebate  
+        if(newArray.length > 0){
+            val = newArray[0].Rebate
+           
+        }else{
+          
+            val = 0;
+        } 
         
         }
 

@@ -1,8 +1,8 @@
 import {BaseStep} from "./baseStep.js"
 // new CalculateStep("annualized", "/", "income", "calculated_periods")
 export class CalculateStep extends BaseStep{
-    constructor(nameOf, description, type, firstValue, operator, secondValue, value){
-            super(nameOf, description, type)
+    constructor(nameOf, description, firstValue, operator, secondValue, value){
+            super(nameOf, description)
             this.firstValue = firstValue,
             this.operator = operator,
             this.secondValue = secondValue
@@ -10,9 +10,11 @@ export class CalculateStep extends BaseStep{
     }
 
     execute(payRollData){
+    
             const firstValue = payRollData.get(this.firstValue).value
+           
             const secondValue = payRollData.get(this.secondValue).value
-            
+           
           
 
             let val

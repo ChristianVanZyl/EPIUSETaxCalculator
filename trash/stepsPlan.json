@@ -1,0 +1,47 @@
+
+[
+         ["InputStep", "income", "Enter your income"],
+         ["InputStep", "age", "Enter your age"],
+         ["InputStep", "pay_frequency", "Enter your payment period"],
+         ["AnnualizationStep", "annual_income", "the annual income of a user", "income", "pay_frequency"],
+         ["SetConstant", "uif_percentage", "the percentage of a monthly salary at which UIF is capped"],
+         ["SetConstant", "uif_max", "the max amount of a monthly salary at which UIF is capped"],
+         ["CalculateStep", "uif_monthly_not_capped", "calculate user's monthly UIF according to %, this is not a capped amount", "income", "*", "uif_percentage"],
+         ["CapStep", "uif_total", "User's monthly uncapped UIF is checked against the cap values to determine the total", "uif_max", "uif_monthly_not_capped"],
+         ["LoadTableStep", "threshold_table", "Table containg SARS data in terms of set thresholds for the year", "taxThresholdTable.json"],
+         ["LookupTableStep", "tax_threshold_total", "Find the user's tax threshold according to their age", "age", "threshold_table"],
+         ["LoadTableStep", "rebate_table", "Table containg SARS data showing rebate values according to age caps", "taxRebateTable.json"],
+         ["LookupTableStep", "tax_rebate_total", "Find the tax rebate a user qualifies for according to their age", "age", "rebate_table"],
+         ["LoadTableStep", "income_table", "Table containg SARS data showing tax liability according to annual income", "taxIncomeTable.json"],
+         ["LookupTableStep", "tax_before_rebate_total", "Find the tax liability before rebate", "annual_income", "income_table"],
+         ["CalculateStep", "yearly_payable_tax", "calculate yearly payable tax", "tax_before_rebate_total", "-", "tax_rebate_total"],
+         ["CalculateStep", "paye_tax_total", "calculate the PAYE total", "yearly_payable_tax", "/", "pay_frequency"],
+         ["CalculateStep", "income_after_paye_deduct", "calculate income after PAYE deduction from gross income", "income", "-", "paye_tax_total"],
+         ["CalculateStep", "net_monthly", "calculate net income per month", "income_after_paye_deduct", "-", "uif_total"],
+         ["CalculateStep", "net_yearly", "calculate net income per year", "net_monthly", "*", "pay_frequency"],
+         ["OutputStep", "Tax Threshold", "The tax threshold a user qualifies for", "tax_threshold_total"],
+         ["OutputStep", "Rebate", "The rebate a user qualifies for", "tax_rebate_total"],
+         ["OutputStep", "Tax Before Rebate", "The tax total a user is liable for before rebate is deducted", "tax_before_rebate_total"],
+         ["OutputStep", "Yearly Tax", "The total amount of a tax that a user has to pay for the year", "yearly_payable_tax"],
+         ["OutputStep", "Paye", "The user's PAYE amount", "paye_tax_total"],
+         ["OutputStep", "UIF Max", "The maximum amount that a user can pay for monthly UIF", "uif_max"],
+         ["OutputStep", "UIF Percentage", "The percentage of a user's periodic income to be deducted for UIF", "uif_percentage"],
+         ["OutputStep", "UIF Monthly", "The overall UIF a user has to pay. This is capped at UIF Max if the UIF Percentage amount exceeds the UIF Max", "uif_total"],
+         ["OutputStep", "Net Monthly", "The monthly net income of a user", "net_monthly"],
+         ["OutputStep", "Net Yearly", "The yearly net income of a user", "net_yearly"]
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
