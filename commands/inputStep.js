@@ -1,13 +1,15 @@
 import {BaseStep} from "./baseStep.js"
 // new InputStep("income") // map.set("income", 0.01) 
 export class InputStep extends BaseStep{
-    constructor(nameOf, description, value){
+    constructor(nameOf, description){
             super(nameOf, description) 
-            this.value = value
     }
 
     execute(payRollData){
-        return this.addTo(payRollData, this.value)
+        const val = payRollData.get(this.nameOf)
+        let value = val;
+
+        return this.addTo(payRollData, value)
        
     }
 }

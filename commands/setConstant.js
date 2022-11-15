@@ -3,7 +3,7 @@ import dataLoader from "../dataLoader.js";
 
 export class SetConstant extends BaseStep{
     
-    // new SetConstant("uif_percentage") // map.set("uif_percentage", 0.01) 
+    // async loading needs to be implemented
     constructor(nameOf, description, filename){
             super(nameOf, description)
             this.constObj = dataLoader(filename);
@@ -16,6 +16,7 @@ export class SetConstant extends BaseStep{
         });
         return this.addTo(payRollData, val)
     }
+
 }
 
         

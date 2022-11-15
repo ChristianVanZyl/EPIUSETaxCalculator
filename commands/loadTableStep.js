@@ -15,5 +15,5 @@ export class LoadTableStep extends BaseStep{
         payRollData.set(this.nameOf, this.tableset)
         return payRollData;
     }
-
+ 
 }

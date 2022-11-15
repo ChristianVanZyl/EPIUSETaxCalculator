@@ -17,7 +17,8 @@ export default function stepsLoader(){
 
     const steps = new Steps (  
         new InputStep("income", "Enter your income"),
-        new InputStep("age", "Enter your age"),
+        new Steps(
+        new InputStep("age", "Enter your age")),
         new InputStep("pay_frequency", "Enter your payment period"),
         new AnnualizationStep("annual_income", "the annual income of a user", "income", "pay_frequency"),
         new SetConstant("uif_percentage", "the percentage of a monthly salary at which UIF is capped", "setconstants.json"),

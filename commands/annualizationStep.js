@@ -17,7 +17,6 @@ export class AnnualizationStep extends BaseStep{
       
         let val = firstValue * secondValue
         
-
         return this.addTo(payRollData, val)
     }
 }

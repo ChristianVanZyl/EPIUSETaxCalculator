@@ -20,8 +20,7 @@ export class CapStep extends BaseStep{
         }
 
         return this.addTo(payRollData, val)
-
-
     }
+
 }
 

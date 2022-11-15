@@ -15,8 +15,6 @@ export class CalculateStep extends BaseStep{
            
             const secondValue = payRollData.get(this.secondValue).value
            
-          
-
             let val
             if(this.operator == "+"){
                 val = firstValue + secondValue
@@ -26,11 +24,9 @@ export class CalculateStep extends BaseStep{
                 val = firstValue / secondValue
             }else if(this.operator == "*"){
                 val = firstValue * secondValue
-            }
-          
-         
-           
+            } 
             return this.addTo(payRollData, val)
 
     }
+
 }

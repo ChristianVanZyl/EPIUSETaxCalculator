@@ -10,25 +10,24 @@ export class BaseStep{
         throw Error("Must be implemented")
     }
 
-    hasType(inputvalue){
-        throw Error("Must be implemented")
-    }
-    
-
+ 
     addTo(payRollData, value){
         
         const name = this.nameOf
-        const desc = this.description
-   
-        
+        const desc = this.description  
         payRollData.set(name, {description: desc, value: value})
         
         return payRollData
     }
 
    
+    hasType(inputvalue){
+        if( this instanceof inputvalue ){   
+            return this
+        }
+    }
 
-
-
+    
+ 
 
 }

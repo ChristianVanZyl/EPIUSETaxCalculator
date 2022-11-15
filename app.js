@@ -9,30 +9,10 @@ const app = express();
 const PORT = process.env.PORT;
 
 
-
-
-// three ways of implementation that could work
-// only one way that would justify the use of ejs, otherwise switch to index.html and script
-
-
-
-// create script within index.html, use function/class directly
-// create dynamic html in script function
-// this would defeat the purpose of using ejs, which simplifies the process by cutting out the need for function creating dynamic html 
-
-
-// create payroll main function, call here to be used
-// follow same logic as in class, but can then call stepsloader in the function
-// async function
-
-
-// logic followed here by using payroll main class
-// use init for async loading
-
-
-
+//async not yet implemented, read up about it, did not yet have the time
 
 // can cut out global variables, but would need to then initialize in both get and post
+// stepsloader needs 
 const steps = stepsLoader();
 const payroll = new PayrollMain(steps, new Map);
 
@@ -43,7 +23,7 @@ app.use(express.static("public"));
 
 
 app.get("/", function(req, res){
-    
+ 
     res.render("Home", {inputs: payroll.getInputs(),
                         outputs: [],
                         tableDisplay: "false"}) 
@@ -51,13 +31,14 @@ app.get("/", function(req, res){
 
 app.post('/', (req, res) => {
     
-    const vals = req.body;
-    payroll.getValues(vals)
+    const valuesObj = req.body;
+    
+    payroll.setValues(valuesObj)
     payroll.execute()
   
-    
+  
     res.render("Home", {
-                        inputs:  payroll.getInputs(),
+                        inputs:  payroll.getPostExInputs(valuesObj),
                         outputs: payroll.getOutputs(),
                         tableDisplay: "true"}
                         ) 

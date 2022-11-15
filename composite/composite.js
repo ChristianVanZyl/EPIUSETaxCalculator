@@ -9,32 +9,42 @@ export class Steps extends BaseStep{
     }
 
     execute(payRollData){
-     
+        console.log(payRollData)
         this.commandSteps.forEach(commandStep => {      
              commandStep.execute(payRollData)          
         })
+   
         return payRollData
+    
     }
+
+ // searches commandsteps array and returns an object array filled only with specified commandstep type (inputvalue param)   
 
     hasType(inputvalue){
-        let map = this.commandSteps
-        let returnvalue = map.filter((value) => 
-            {
-                value instanceof inputvalue 
-                return value instanceof inputvalue 
-            }
-        )   
-        return returnvalue
+       let arr = []
+       
+       this.commandSteps.forEach(commandStep => {   
+        
+                let temp = commandStep.hasType(inputvalue)
+                if(temp  === undefined){
+                    // if inputvalue is not the type of commandstep, do nothing
+                }else if(temp instanceof Array){
+                    // recursive call
+                    temp.forEach(commandStep => {
+                        arr.push(commandStep.hasType(inputvalue))
+                    })
+                }else{
+                    // perform method without recursion
+                    arr.push(commandStep.hasType(inputvalue))
+                }
+               
+       })
+       
+       return arr    
     }
 
-    setValues(vals){ 
-        let map = this.commandSteps
 
-        Object.entries(vals).forEach(([key, val]) => {
-        map.some(m => m.nameOf === key ? m.value = val: console.log(""))
-        });
-        return map
-    }
+
 
 }
 
