@@ -14,39 +14,40 @@ const PORT = process.env.PORT;
 // can cut out global variables, but would need to then initialize in both get and post
 // stepsloader needs 
 const steps = stepsLoader();
-const payroll = new PayrollMain(steps, new Map);
+const payroll = new PayrollMain(steps, new Map());
 
 app.set("view engine", "ejs");
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.static("public"));
 
 
-app.get("/", function(req, res){
- 
-    res.render("Home", {inputs: payroll.getInputs(),
-                        outputs: [],
-                        tableDisplay: "false"}) 
+app.get("/", function (req, res) {
+   
+    res.render("Home", {
+        inputs: payroll.getInputs(),
+        outputs: [],
+        tableDisplay: "false"
+    })
 });
 
 app.post('/', (req, res) => {
-    
+
     const valuesObj = req.body;
-    
     payroll.setValues(valuesObj)
     payroll.execute()
   
-  
     res.render("Home", {
-                        inputs:  payroll.getPostExInputs(valuesObj),
-                        outputs: payroll.getOutputs(),
-                        tableDisplay: "true"}
-                        ) 
+        inputs: payroll.getInputs(),
+        outputs: payroll.getOutputs(),
+        tableDisplay: "true"
+    }
+    )
 });
 
 
 
-app.listen(PORT, function(){
+app.listen(PORT, function () {
     console.log(`Server running on port ${PORT}`)
 
 })

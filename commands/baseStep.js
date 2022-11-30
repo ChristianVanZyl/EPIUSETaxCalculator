@@ -1,33 +1,23 @@
-
-
-export class BaseStep{
-    constructor(nameOf, description){
+export class BaseStep {
+    constructor(nameOf, description) {
         this.nameOf = nameOf;
         this.description = description
     }
 
-    execute(payRollData){
+    execute(payRollData) {
         throw Error("Must be implemented")
     }
 
- 
-    addTo(payRollData, value){
-        
+    addTo(payRollData, value) {
         const name = this.nameOf
-        const desc = this.description  
-        payRollData.set(name, {description: desc, value: value})
-        
+        const desc = this.description
+        payRollData.set(name, { description: desc, value: value })
         return payRollData
     }
 
-   
-    hasType(inputvalue){
-        if( this instanceof inputvalue ){   
-            return this
-        }
+    accept(visitor) {
+        visitor.visit_basestep(this);
+        return visitor
     }
-
-    
- 
 
 }

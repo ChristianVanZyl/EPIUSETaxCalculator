@@ -1,50 +1,88 @@
-import {BaseStep} from "../commands/baseStep.js"
+import { BaseStep } from "../commands/baseStep.js"
 
 // composite pattern is used to execute a method shared by all of the command classes
 // circumventing the need to call the method for each step separately
-export class Steps extends BaseStep{
-    constructor(...commandSteps){
+export class Steps extends BaseStep {
+    constructor(...commandSteps) {
         super()
         this.commandSteps = commandSteps
     }
 
-    execute(payRollData){
-        console.log(payRollData)
-        this.commandSteps.forEach(commandStep => {      
-             commandStep.execute(payRollData)          
+    execute(payRollData) {
+        this.commandSteps.forEach(commandStep => {
+            commandStep.execute(payRollData)
         })
-   
         return payRollData
-    
     }
 
- // searches commandsteps array and returns an object array filled only with specified commandstep type (inputvalue param)   
+    accept(visitor) {
+        visitor.enter_steps(this);
+        for (let commandSteps of this.commandSteps) {
+            commandSteps.accept(visitor);
+        }
+        visitor.exit_steps(this);
+        return visitor
+    }
+}
 
-    hasType(inputvalue){
-       let arr = []
-       
-       this.commandSteps.forEach(commandStep => {   
-        
-                let temp = commandStep.hasType(inputvalue)
-                if(temp  === undefined){
-                    // if inputvalue is not the type of commandstep, do nothing
-                }else if(temp instanceof Array){
-                    // recursive call
-                    temp.forEach(commandStep => {
-                        arr.push(commandStep.hasType(inputvalue))
-                    })
-                }else{
-                    // perform method without recursion
-                    arr.push(commandStep.hasType(inputvalue))
-                }
-               
-       })
-       
-       return arr    
+export class If extends BaseStep {
+    constructor(val1, operator, val2, branchTrue, branchFalse) {
+        super()
+        this.val1 = val1
+        this.operator = operator
+        this.val2 = val2
+        this.branchTrue = branchTrue
+        this.branchFalse = branchFalse
+
     }
 
+    execute(payRollData) {
+        const val1 = payRollData.get(this.val1).value
+        const val2 = payRollData.get(this.val2).value
+        let result = null
 
+        switch (this.operator) {
+            case "==": result = val1 == val2
+                break
+            case ">=": result = val1 >= val2
+                break
+            case ">": result = val1 > val2
+                break
+            case "<=": result = val1 <= val2
+                break
+            case "<": result = val1 < val2
+                break
+            case "!=": result = val1 != val2
+                break
+            default: if (this.operator) throw "Operator does not match, please use relational operators";
+                break
+        }
 
+        const branch = result ? this.branchTrue : this.branchFalse
+
+        branch.forEach(commandStep => {
+            commandStep.execute(payRollData)
+        })
+
+        return payRollData
+    }
+
+    accept(visitor) {
+
+        visitor.enter_branchtrue(this);
+        for (let commandSteps of this.branchTrue) {
+            commandSteps.accept(visitor);
+        }
+        visitor.exit_branchtrue(this)
+
+        visitor.enter_branchfalse(this);
+        for (let commandSteps of this.branchFalse) {
+            commandSteps.accept(visitor);
+        }
+        visitor.exit_branchfalse(this)
+
+        return visitor
+    }
 
 }
 
