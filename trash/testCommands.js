@@ -1,13 +1,13 @@
 
 import {SetConstant} from "./commands/SetConstant.js"
-import {AnnualizationStep} from "./commands/annualizationStep.js"
-import {CalculateStep} from "./commands/calculateStep.js"
-import { CapStep } from "./commands/capStep.js"
-import { InputStep } from "./commands/inputStep.js"
-import { LoadTableStep } from "./commands/loadTableStep.js"
-import { LookupTableStep } from "./commands/lookupTableStep.js"
-import {Steps} from "./composite/composite.js"
-import { OutputStep } from "./commands/outputStep.js"
+import {AnnualizationStep} from "../commands/annualizationStep.js"
+import {CalculateStep} from "../commands/calculateStep.js"
+import { CapStep } from "../commands/capStep.js"
+import { InputStep } from "../commands/inputStep.js"
+import { LoadTableStep } from "../commands/loadTableStep.js"
+import { LookupTableStep } from "../commands/lookupTableStep.js"
+import {Steps} from "../composite/composite.js"
+import { OutputStep } from "../commands/outputStep.js"
 
 import {PayRollData} from "./payRollData.js"
 

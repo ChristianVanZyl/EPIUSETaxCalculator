@@ -3,8 +3,8 @@ import { BaseStep } from "../commands/baseStep.js"
 // composite pattern is used to execute a method shared by all of the command classes
 // circumventing the need to call the method for each step separately
 export class Steps extends BaseStep {
-    constructor(...commandSteps) {
-        super()
+    constructor(nameof, description, ...commandSteps) {
+        super(nameof, description)
         this.commandSteps = commandSteps
     }
 
@@ -60,9 +60,7 @@ export class If extends BaseStep {
 
         const branch = result ? this.branchTrue : this.branchFalse
 
-        branch.forEach(commandStep => {
-            commandStep.execute(payRollData)
-        })
+        branch.execute(payRollData)
 
         return payRollData
     }
@@ -70,15 +68,11 @@ export class If extends BaseStep {
     accept(visitor) {
 
         visitor.enter_branchtrue(this);
-        for (let commandSteps of this.branchTrue) {
-            commandSteps.accept(visitor);
-        }
+        this.branchTrue.accept(visitor);
         visitor.exit_branchtrue(this)
 
         visitor.enter_branchfalse(this);
-        for (let commandSteps of this.branchFalse) {
-            commandSteps.accept(visitor);
-        }
+        this.branchFalse.accept(visitor);
         visitor.exit_branchfalse(this)
 
         return visitor

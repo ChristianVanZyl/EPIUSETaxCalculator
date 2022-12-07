@@ -1,38 +1,34 @@
 import express from "express";
 import dotenv from "dotenv";
-import { PayrollMain } from "./payrollMain.js"
-import stepsLoader from "./stepsLoader.js"
+import functionMain from "./functionMain.js"
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT;
 
-
-//async not yet implemented, read up about it, did not yet have the time
-
-// can cut out global variables, but would need to then initialize in both get and post
-// stepsloader needs 
-const steps = stepsLoader();
-const payroll = new PayrollMain(steps, new Map());
+const payroll = await functionMain();
 
 app.set("view engine", "ejs");
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static("public"));
 
+// new function, contains async init 
+// factory returns init 
 
-app.get("/", function (req, res) {
-   
+app.get("/", (req, res) => {
+  
     res.render("Home", {
         inputs: payroll.getInputs(),
         outputs: [],
-        tableDisplay: "false"
+        tableDisplay: "false",
+        map: payroll.map
     })
 });
 
 app.post('/', (req, res) => {
-
+    
     const valuesObj = req.body;
     payroll.setValues(valuesObj)
     payroll.execute()
@@ -40,16 +36,17 @@ app.post('/', (req, res) => {
     res.render("Home", {
         inputs: payroll.getInputs(),
         outputs: payroll.getOutputs(),
-        tableDisplay: "true"
+        tableDisplay: "true",
+        map: payroll.map
     }
     )
 });
 
 
 
-app.listen(PORT, function () {
-    console.log(`Server running on port ${PORT}`)
+app.listen(PORT, () =>  {
 
+    console.log(`Server running on port ${PORT}`)
 })
 
 

@@ -2,12 +2,12 @@ import { BaseStep } from "./baseStep.js"
 import dataLoader from "../dataLoader.js";
 
 
-// this needs to make use of init for async loading of dataloader
-
 export class LoadTableStep extends BaseStep {
+
     constructor(nameOf, description, tableInputFileName) {
         super(nameOf, description)
-        this.tableset = dataLoader(tableInputFileName);
+        this.tableInputFileName = tableInputFileName
+        this.tableset = null
     }
 
     execute(payRollData) {
@@ -19,4 +19,12 @@ export class LoadTableStep extends BaseStep {
         visitor.visit_loadstep(this);
         return visitor
     }
+
+
+    async init() { 
+            this.tableset = await dataLoader(this.tableInputFileName)
+    }
+
+   
 }
+

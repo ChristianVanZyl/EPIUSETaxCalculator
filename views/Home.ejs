@@ -42,13 +42,22 @@
   <div class="col-sm-12">
     <div class="centerForm">
 
+      <% function resultsFromMap(array, map) { %>
+        
+      <%  array.forEach((a) => {              %>
+      <%     if (map.size > 0) {              %>
+      <%        let val = map.get(a.nameOf)   %>
+      <%        a.value = val.value           %>
+      <%       }                              %>
+      <%     });                              %>
+        
+      <% } %>
 
     <form class="" action="/" method="post" style="padding-top: 6%">
       
-     
+      <%= resultsFromMap(inputs, map) %>
       <% inputs = inputs.forEach((value) => { %>
         
-     
         <div class="mb-3"> 
           
           <label for="userInputs" class="form-label">Please enter your <%= value.nameOf.replace('_',' ') %>  </label>
@@ -81,13 +90,14 @@
 
     <table class="table table-bordered" style="background-color: #30373f; border-color: white; ">
       <tbody>
+        <%= resultsFromMap(outputs, map) %>
         <% outputs = outputs.forEach((value) => { %>
      
           <tr style="background-color: #587d9f; color: white">
           <th colspan="2"> <%= value.nameOf %></td>
           </tr>
           <tr>
-           <td>R<%= (value.value).toFixed(2) %> </td>
+           <td>R<%= (value.value) %> </td>
 
           </tr>
 

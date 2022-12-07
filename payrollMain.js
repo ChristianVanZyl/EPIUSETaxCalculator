@@ -1,5 +1,7 @@
 import { InputVisitor } from "./visitors/inputVisitor.js"
 import { OutputVisitor } from "./visitors/outputVisitor.js"
+import { LoadVisitor } from "./visitors/loadVisitor.js"
+import { ConstantVisitor } from "./visitors/constantsVisitor.js"
 
 export class PayrollMain {
     constructor(steps, map) {
@@ -9,23 +11,11 @@ export class PayrollMain {
 
     getInputs() {
         let result = this.steps.accept(new InputVisitor())
-        
-        if(this.map.size > 0){
-            result.arr.forEach((a) => {
-                let val = this.map.get(a.nameOf)
-                a.value = val.value
-            });
-        }
-      
         return result.arr
     };
 
     getOutputs() {
         let result = this.steps.accept(new OutputVisitor())
-        result.arr.forEach(a => {
-            let val = this.map.get(a.nameOf)
-            a.value = val.value
-        });
         return result.arr
     };
 

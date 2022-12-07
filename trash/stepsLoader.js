@@ -1,21 +1,17 @@
-import { SetConstant } from "./commands/SetConstant.js"
-import { AnnualizationStep } from "./commands/annualizationStep.js"
-import { CalculateStep } from "./commands/calculateStep.js"
-import { CapStep } from "./commands/capStep.js"
-import { InputStep } from "./commands/inputStep.js"
-import { LoadTableStep } from "./commands/loadTableStep.js"
-import { LookupTableStep } from "./commands/lookupTableStep.js"
-import { Steps } from "./composite/composite.js"
-import { OutputStep } from "./commands/outputStep.js"
-import { If } from "./composite/composite.js"
-
-// this needs to be an async function, to be changed later
-// struggling to create stepsplan json and use the data to create new steps
-// class names are string, struggling to pick up as constructor
+import { SetConstant } from "../commands/setConstantStep.js"
+import { AnnualizationStep } from "../commands/annualizationStep.js"
+import { CalculateStep } from "../commands/calculateStep.js"
+import { CapStep } from "../commands/capStep.js"
+import { InputStep } from "../commands/inputStep.js"
+import { LoadTableStep } from "../commands/loadTableStep.js"
+import { LookupTableStep } from "../commands/lookupTableStep.js"
+import { Steps } from "../composite/composite.js"
+import { OutputStep } from "../commands/outputStep.js"
+import { If } from "../composite/composite.js"
 
 export default function stepsLoader() {
-
-    const steps = new Steps(
+ 
+    let steps = new Steps(
         new LoadTableStep("threshold_table", "Table containg SARS data in terms of set thresholds for the year", "taxThresholdTable.json"),
         new LoadTableStep("rebate_table", "Table containg SARS data showing rebate values according to age caps", "taxRebateTable.json"),
         new LoadTableStep("income_table", "Table containg SARS data showing tax liability according to annual income", "taxIncomeTable.json"),
@@ -30,9 +26,9 @@ export default function stepsLoader() {
         new LookupTableStep("tax_threshold_total", "Find the user's tax threshold according to their age", "age", "threshold_table"),
         new LookupTableStep("tax_rebate_total", "Find the tax rebate a user qualifies for according to their age", "age", "rebate_table"),
         new LookupTableStep("tax_before_rebate_total", "Find the tax liability before rebate", "annual_income", "income_table"),
-        new If("annual_income", ">=", "tax_threshold_total", 
-            [new CalculateStep("yearly_payable_tax", "calculate yearly payable tax", "tax_before_rebate_total", "-", "tax_rebate_total")],
-            [new SetConstant("yearly_payable_tax", "No PAYE if threshold not met", "setconstants.json")]
+        new If("annual_income", ">=", "tax_threshold_total",
+            new CalculateStep("yearly_payable_tax", "calculate yearly payable tax", "tax_before_rebate_total", "-", "tax_rebate_total"),
+            new SetConstant("yearly_payable_tax", "No PAYE if threshold not met", "setconstants.json")
         ),
         new CalculateStep("paye_tax_total", "calculate the PAYE total", "yearly_payable_tax", "/", "pay_frequency"),
         new CalculateStep("income_after_paye_deduct", "calculate income after PAYE deduction from gross income", "income", "-", "paye_tax_total"),
@@ -48,8 +44,13 @@ export default function stepsLoader() {
         new OutputStep("Net Yearly", "The yearly net income of a user", "net_yearly")
     )
 
-    return steps
+    return steps;
 }
+
+// base class return null
+// async method in command loadstep
+// stepsloader async
+// promises.all 
 
 
 
